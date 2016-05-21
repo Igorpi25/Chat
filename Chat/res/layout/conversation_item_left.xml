@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/conversation_padding"
+    android:paddingLeft="@dimen/conversation_padding"
+    android:paddingRight="@dimen/conversation_padding" >
+
+    <ImageView
+        android:id="@+id/conversation_item_left_icon"
+        android:layout_width="@dimen/conversation_icon"
+        android:layout_height="@dimen/conversation_icon"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_no_icon" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/conversation_item_left_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/conversation_margin"
+            android:text="Name"
+            android:textColor="@color/color_gray" />
+
+        <TextView
+            android:id="@+id/conversation_item_left_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/conversation_margin"
+            android:background="@drawable/drawable_message_left"
+            android:clickable="true"
+            android:longClickable="true"
+            android:maxWidth="@dimen/conversation_message_max_width"
+            android:minWidth="@dimen/conversation_message_min_width"
+            android:padding="@dimen/message_padding"
+            android:text="Message of my conversation"
+            android:textSize="@dimen/conversation_message_textsize" />
+
+    </LinearLayout>
+
+</LinearLayout>

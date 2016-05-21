@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="conversation_icon">48dp</dimen>
+    <dimen name="conversation_padding">10dp</dimen>
+    <dimen name="conversation_message_max_width">180dp</dimen>
+    <dimen name="conversation_message_min_width">60dp</dimen>
+    <dimen name="conversation_message_textsize">18sp</dimen>
+    
+    <dimen name="conversation_margin">10dp</dimen>
+    <dimen name="conversation_date_padding">5dp</dimen>
+    
+    <dimen name="message_corner_radius">8dp</dimen>
+    <dimen name="message_padding">10dp</dimen>
+    
+    <dimen name="drawable_marker_size">10dp</dimen>
+    
+</resources>

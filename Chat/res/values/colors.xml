@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_green">#18c818</color>
+    <color name="color_bottom_menu">#fafafa</color>
+    <color name="color_salad">#96d936</color>
+    <color name="color_salad_pressed">#739926</color>
+    <color name="color_white_pressed">#d9d9d9</color>
+    <color name="color_marker_red">#ffff0000</color>
+</resources>

@@ -1,0 +1,32 @@
+<resources>
+
+    <string name="app_name">Ivanov-Demo</string>
+    <string name="logo">com.ivanov.tech.chat</string>
+    <string name="subs">(demo activity)</string>
+	<string name="screen_head">Demo</string>
+	<string name="screen_sub">[Ivanov Tech]</string>
+	
+	<string name="recent_empty_tittle">Welcome to Ivanov Tech chat-demo!</string>
+	<string name="recent_empty_body">This version only for chat-testing, some functions are unavailable. Thank you for understanding</string>
+	<string name="recent_empty_footer">To start click Contacts in the bottom</string>
+	
+    <string name="conversation_button_send_text">Send</string>
+    <string name="conversation_button_interlocutor">:)</string>
+	<string name="conversation_adapter_icon_tag">conversation_adapter_icon_tag</string>
+	
+    
+	<string name="menu_add_group">Group chat</string>
+	<string name="menu_add_contact">Add contact</string>
+    <string name="menu_details">Details</string>
+    
+    <string name="conversation_context_menu_copy">Copy</string>
+    <string name="conversation_context_menu_delete">Delete</string>
+    
+    <string name="bottom_menu_recent_text">Chats</string>
+    <string name="bottom_menu_contacts_text">Contacts</string>
+    <string name="bottom_menu_me_text">Me</string>
+    
+    <string name="recent_listview_empty">Welcome to LetsRace! To start chat click Contacts-button in the bottom</string>
+    
+    
+</resources>

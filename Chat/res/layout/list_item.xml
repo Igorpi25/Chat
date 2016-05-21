@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:background="@color/color_white"
+    android:padding="5dp" >
+
+    <ImageView
+        android:id="@+id/listview_item_icon"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dp"
+        android:contentDescription="@string/listview_item_imageview_icon_contentdescription"
+        android:padding="5dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_no_icon" />
+    
+    <ImageView
+        android:id="@+id/listview_item_marker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/listview_item_icon"
+        android:layout_alignTop="@+id/listview_item_icon"
+        android:src="@drawable/drawable_marker_red"
+        android:visibility="visible" />
+   
+    <TextView
+        android:id="@+id/listview_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/listview_item_icon"
+        android:layout_toRightOf="@+id/listview_item_icon"
+        android:paddingTop="8dp"
+        android:text="Name"
+        android:textSize="16sp" />
+    
+    <TextView
+        android:id="@+id/listview_item_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/listview_item_icon"
+        android:layout_toRightOf="@+id/listview_item_icon"
+        android:maxHeight="30dp"
+        android:maxLines="1"
+        android:maxWidth="180dp"
+        android:paddingBottom="8dp"
+        android:text="Status"
+        android:textColor="@color/color_gray" />
+    
+    <TextView
+        android:id="@+id/listview_item_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/listview_item_icon"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:text="date"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/color_text_gray"
+        android:textSize="12sp" />
+
+</RelativeLayout>

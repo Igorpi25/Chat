@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:visibility="visible"
+    android:weightSum="1.0" >
+
+    <ListView
+        android:id="@+id/conversation_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.0"
+        android:background="@color/color_mat"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp" >
+
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/drawable_layout_bottom_menu"
+        android:clickable="true" >
+
+        <Button
+            android:id="@+id/conversation_button_smile"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/drawable_button_conversation_circle"
+            android:text="@string/conversation_button_interlocutor"
+            android:textColor="@color/color_gray"
+            android:visibility="visible" />
+        
+        <EditText
+            android:id="@+id/conversation_edittext"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:ems="10" >
+
+            <requestFocus />
+        </EditText>
+
+        <Button
+            android:id="@+id/conversation_button_send"
+            style="@style/style_button_dialog"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="3dp"
+            android:text="@string/conversation_button_send_text" />
+
+    </LinearLayout>
+
+</LinearLayout>

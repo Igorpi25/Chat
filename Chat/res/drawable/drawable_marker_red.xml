@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item >
+        <shape android:shape="oval" >
+            <solid android:color="@color/color_marker_red"/>
+            <size android:width="@dimen/drawable_marker_size" android:height="@dimen/drawable_marker_size"/>
+        </shape>
+    </item>
+</layer-list>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="right"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/conversation_padding"
+    android:paddingLeft="@dimen/conversation_padding"
+    android:paddingRight="@dimen/conversation_padding" >
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical" >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/conversation_margin" >
+
+            <ProgressBar
+                android:id="@+id/progressbar_processing"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/imageview_failed"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:clickable="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_message_failed" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/conversation_item_right_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/conversation_margin"
+            android:background="@drawable/drawable_message_right"
+            android:clickable="true"
+            android:longClickable="true"
+            android:maxWidth="@dimen/conversation_message_max_width"
+            android:minWidth="@dimen/conversation_message_min_width"
+            android:padding="@dimen/message_padding"
+            android:text="bnnn"
+            android:textSize="@dimen/conversation_message_textsize" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/conversation_item_right_icon"
+        android:layout_width="@dimen/conversation_icon"
+        android:layout_height="@dimen/conversation_icon"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_no_icon" />
+
+</LinearLayout>

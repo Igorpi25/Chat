@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/color_mat"
+    android:orientation="vertical"
+    android:weightSum="1" >
+        
+    <ListView
+        android:id="@+id/contacts_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:background="@color/color_mat"
+        android:clipToPadding="false"
+        android:divider="@color/color_gray_light"
+        android:dividerHeight="0.7dp"
+        android:padding="10dp"
+    	android:scrollbarAlwaysDrawVerticalTrack="true"
+	    android:scrollbarStyle="outsideOverlay" >
+
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/drawable_layout_bottom_menu"
+        android:orientation="horizontal"
+        android:paddingBottom="3dp"
+        android:paddingTop="6dp"
+        android:weightSum="3" >
+
+        <LinearLayout
+            android:id="@+id/contacts_recent"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="vertical" >
+            
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_menu_bottom_recent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bottom_menu_recent_text" 
+                android:textColor="@color/color_gray"/>
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/contacts_contacts"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_menu_bottom_contacts_selected"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bottom_menu_contacts_text"
+                android:textColor="@color/color_green" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/contacts_me"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="vertical" >
+            
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_menu_bottom_me"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bottom_menu_me_text" 
+                android:textColor="@color/color_gray"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
