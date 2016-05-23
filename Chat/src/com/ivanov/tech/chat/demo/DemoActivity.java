@@ -15,7 +15,6 @@ import com.ivanov.tech.chat.reciever.MessageReciever;
 import com.ivanov.tech.chat.ui.FragmentSplashScreen;
 import com.ivanov.tech.connection.Connection;
 import com.ivanov.tech.profile.Profile;
-import com.ivanov.tech.profile.ui.MainActivity;
 import com.ivanov.tech.session.Session;
 
 /**
@@ -29,11 +28,25 @@ public class DemoActivity extends SherlockFragmentActivity {
 	private boolean ApiKeyActual=false;
 	private boolean TimerFinished=false;
 	
+	//Profile URLs
+	private static final String url_server = "http://igorpi25.ru/v2/";	
+		
+	private static final String url_searchcontact = url_server+"search_contact";
+	public static final String url_avatarupload = url_server+"avatars/upload";
+	public static final String url_grouppanoramaupload = url_server+"group_panorama/upload";
+	private static final String url_creategroup = url_server+"create_group";	
+	
+	//Session URLs
+	static final String url_testapikey=url_server+"testapikey";
+	static final String url_login=url_server+"login";
+	static final String url_register=url_server+"register";
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Session.Initialize(getApplicationContext());
+        Session.Initialize(getApplicationContext(),url_testapikey,url_login,url_register);
+        Profile.Initialize(getApplicationContext(),url_searchcontact,url_avatarupload,url_grouppanoramaupload,url_creategroup);
         
         setContentView(R.layout.activity_main);
         
