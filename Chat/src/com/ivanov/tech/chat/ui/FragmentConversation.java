@@ -4,6 +4,9 @@ package com.ivanov.tech.chat.ui;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import android.annotation.TargetApi;
@@ -119,9 +122,9 @@ public abstract class FragmentConversation extends SherlockDialogFragment implem
     @Override
 	public void onClick(View v) {
 		
-    	if(v.getTag(R.id.imageview_failed)!=null){
+    	if(v.getTag(R.id.conversation_item_right_imageview_failed)!=null){
     		
-    		int position=(Integer)v.getTag(R.id.imageview_failed);
+    		int position=(Integer)v.getTag(R.id.conversation_item_right_imageview_failed);
     		
     		adapter.getCursor().moveToPosition(position);
     		JSONObject json;
@@ -135,6 +138,14 @@ public abstract class FragmentConversation extends SherlockDialogFragment implem
 			} catch (JSONException e) {
 				Log.e(TAG, "onClick JSONException e="+e);
 			}
+			
+    	}
+    	
+    	if(v.getTag(R.id.conversation_order_right_imageview_failed)!=null){
+    		
+    		int position=(Integer)v.getTag(R.id.conversation_order_right_imageview_failed);
+    		
+    		Log.e(TAG, "onClick conversation_order_right_imageview_failed Not implemented yet");
 			
     	}
     	

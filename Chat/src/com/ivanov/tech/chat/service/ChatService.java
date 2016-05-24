@@ -3,6 +3,7 @@ package com.ivanov.tech.chat.service;
 import java.util.ArrayList;
 
 import com.ivanov.tech.communicator.service.TransportBase;
+import com.ivanov.tech.profile.service.TransportProfile;
 
 public class ChatService extends com.ivanov.tech.communicator.service.CommunicatorService{
 
@@ -14,7 +15,10 @@ public class ChatService extends com.ivanov.tech.communicator.service.Communicat
 		ArrayList<TransportBase> transports=new ArrayList<TransportBase>();		
 		
 		TransportChat transportchat=new TransportChat(this);		
+		TransportProfile transportprofile=new TransportProfile(this);
+		
 		transports.add(transportchat);
+		transports.add(transportprofile);
 		
 		return transports;
 	}
@@ -23,6 +27,11 @@ public class ChatService extends com.ivanov.tech.communicator.service.Communicat
 	public String getServerUrl() {
 		// TODO Auto-generated method stub
 		return URL_SERVER;
+	}
+
+	@Override
+	public String getCommunicatorServiceClass() {		
+		return ChatService.class.getCanonicalName();
 	}
 
 }

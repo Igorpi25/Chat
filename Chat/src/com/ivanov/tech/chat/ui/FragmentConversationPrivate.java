@@ -25,6 +25,7 @@ import com.ivanov.tech.chat.provider.DBContract;
 import com.ivanov.tech.chat.reciever.MessageReciever;
 import com.ivanov.tech.chat.service.ChatService;
 import com.ivanov.tech.chat.service.TransportChat;
+import com.ivanov.tech.communicator.Communicator;
 import com.ivanov.tech.profile.Profile;
 import com.ivanov.tech.session.Session;
 
@@ -139,7 +140,7 @@ public class FragmentConversationPrivate extends FragmentConversation implements
 			        	//user_name=usersmap.get(getUserId()).get(USERSMAP_NAME);
 			        	//user_status=usersmap.get(getUserId()).get(USERSMAP_STATUS);
 			        	
-			        	JSONObject json=new JSONObject("{userid:"+getUserId()+", message_id:"+getPrivateMessageId()+" status:"+getStatus()+", message:{text:'"+getValue()+"'}, icon:{visible:true, image_url:'"+getIcon()+"'}, name:{visible:false}}");   
+			        	JSONObject json=new JSONObject("{userid:"+getUserId()+", message_id:"+getPrivateMessageId()+", status:"+getStatus()+", message:{text:'"+getValue()+"'}, icon:{visible:true, image_url:'"+getIcon()+"'}, name:{visible:false}}");   
 			        	matrixcursor.addRow(new Object[]{++_id,type,0,json.toString()});
 			        	
 			        	
@@ -296,12 +297,7 @@ public class FragmentConversationPrivate extends FragmentConversation implements
 	    	Log.d(TAG,"sendMessage JSONException e="+e);
 		}
 	    
-	    Intent intent=new Intent(getActivity().getApplicationContext(),ChatService.class);
-	    intent.putExtra("userid", Session.getUserId());
-	    intent.putExtra("transport", Chat.TRANSPORT_TEXT);
-	    intent.putExtra("json", json.toString());
-		
-		getActivity().startService(intent);
+	    Chat.sendCommunicatorMessage(getActivity().getApplicationContext(),json);	    
 	}
 	
 	@Override
@@ -320,12 +316,7 @@ public class FragmentConversationPrivate extends FragmentConversation implements
 	    	Log.d(TAG,"resendMessage JSONException e="+e);
 		}
 	    
-	    Intent intent=new Intent(getActivity().getApplicationContext(),ChatService.class);
-	    intent.putExtra("userid", Session.getUserId());
-	    intent.putExtra("transport", Chat.TRANSPORT_TEXT);
-	    intent.putExtra("json", json.toString());
-		
-		getActivity().startService(intent);
+	    Chat.sendCommunicatorMessage(getActivity().getApplicationContext(),json);
 	}
 		
 	public int getUserId(){
@@ -353,7 +344,8 @@ public class FragmentConversationPrivate extends FragmentConversation implements
     }
 	
 	public String getValue(){
-    	return privatecursor.getString(privatecursor.getColumnIndex(DBContract.Private.COLUMN_NAME_VALUE));
+		Log.e(TAG, "value="+privatecursor.getString(privatecursor.getColumnIndex(DBContract.Private.COLUMN_NAME_VALUE)).replaceAll("\"", "\\\\\"").replaceAll("\'", "\\\\\'"));
+    	return privatecursor.getString(privatecursor.getColumnIndex(DBContract.Private.COLUMN_NAME_VALUE)).replaceAll("\"", "\\\\\"").replaceAll("\'", "\\\\\'");
     }
 	
 	public long getDate(){
@@ -373,7 +365,7 @@ public class FragmentConversationPrivate extends FragmentConversation implements
     }
 	
 	public String getName(){
-    	return privatecursor.getString(privatecursor.getColumnIndex("name"));
+    	return privatecursor.getString(privatecursor.getColumnIndex("name")).replaceAll("\"", "\\\\\"").replaceAll("\'", "\\\\\'");
     }
 
 	//------------Loader<Private>-------------------
@@ -427,6 +419,11 @@ public class FragmentConversationPrivate extends FragmentConversation implements
 	            	
 	            break;            
 	    }
+		
+		if(isBottomReachedAndIdle()){
+    		//Log.d(TAG, "onLoadFinished smoothScrollToPosition");
+    		scrollDown();
+    	}
 	        
 	}
 

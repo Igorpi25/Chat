@@ -125,29 +125,34 @@ public class DBContentProvider extends ContentProvider{
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
 
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        
-        
-        
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+                
         if( uri.equals(URI_RECENTLIST) ){
         	
-        	Log.d("DBContentProvider", "query URI_RECENTLIST_PRIVATE");
+        	Log.d("DBContentProvider", "query URI_RECENTLIST");
         	
         	Cursor cursor=null;
         	
-        	try {
-                
+        	try{        	
+        		db.execSQL("ATTACH DATABASE ? AS db_profile", new String[]{ getContext().getDatabasePath("profile.db").getPath() });
+        	} catch (SQLException e) {
+            	Log.e("DBContentProvider", "query URI_RECENTLIST ATTACH DATABASE SQLException e="+e);
+        	} catch(Exception e){
+        		Log.e("DBContentProvider", "query URI_RECENTLIST ATTACH DATABASE Exception e="+e);
+        	} 
+        	
+        	try{	                
                 String sql=
-                	"SELECT 0 AS recent_type, p.user_id AS profile_id, CASE WHEN p.direction = 0 THEN p.user_id ELSE "+Session.getUserId()+" END AS sender, p.message AS message, p.value AS value, p.date AS date, p.status AS status, user.url_icon AS icon, user.name AS name, user.name AS sender_name " +                	
+                	"SELECT 0 AS recent_type, p.user_id AS profile_id, CASE WHEN p.direction = 0 THEN p.user_id ELSE "+Session.getUserId()+" END AS sender, p.message AS message, p.value AS value, p.date AS date, p.status AS status, interlocutor.url_icon AS icon, interlocutor.name AS name, CASE WHEN p.direction = 0 THEN interlocutor.name ELSE me.name END AS sender_name " +                	
                 	"FROM 	( SELECT user_id, max( _id ) AS max_id "+
 		           			"FROM " + DBContract.Private.TABLE_NAME + " " +
 		           			"WHERE ( message = "+Chat.TRANSPORT_TEXT+" ) "+
 		           			"GROUP BY user_id "+
 		           			") AS u "+
 		           	"INNER JOIN " + DBContract.Private.TABLE_NAME + " AS p ON p._id = u.max_id "+
-		           	"LEFT JOIN db_profile.user AS user ON u.user_id = user.server_id "+
-		            
-		           	
+		           	"LEFT JOIN db_profile.user AS interlocutor ON u.user_id = interlocutor.server_id "+
+		           	"LEFT JOIN db_profile.user AS me ON "+Session.getUserId()+" = me.server_id "+
+                			           	
 		           	"UNION ALL "+
 		           	
 		           	"SELECT 1 AS recent_type, p.group_id AS profile_id, p.sender AS sender, p.message AS message, p.value AS value, p.date AS date, p.status AS status, groups.url_icon AS icon, groups.name AS name, user.name AS sender_name  " +
@@ -168,11 +173,10 @@ public class DBContentProvider extends ContentProvider{
             	
             } catch (SQLException e) {
             	Log.e("DBContentProvider", "query URI_RECENTLIST SQLException e="+e);
-            	e.printStackTrace();
-            } catch (Exception e) {
-            	Log.e("DBContentProvider", "query URI_RECENTLIST Exception e="+e);
-            	e.printStackTrace();
-            } 
+            } catch(Exception e){
+        		Log.e("DBContentProvider", "query URI_RECENTLIST Exception e="+e);
+        	}
+            
         	
         	return cursor;
         }       
@@ -186,13 +190,22 @@ public class DBContentProvider extends ContentProvider{
         	
         	try{        	
         		db.execSQL("ATTACH DATABASE ? AS db_profile", new String[]{ getContext().getDatabasePath("profile.db").getPath() });
-        		    
+        	} catch (SQLException e) {
+            	Log.e("DBContentProvider", "query PRIVATE_USER_ID ATTACH DATABASE SQLException e="+e);
+            	e.printStackTrace();
+        	} catch (Exception e) {
+            	Log.e("DBContentProvider", "query PRIVATE_USER_ID ATTACH DATABASE Exception e="+e);
+            	e.printStackTrace();
+            } 
+        	
+        	try{
                 String sql=
-                	"SELECT chat_private.*, user.url_icon AS icon, user.name AS name  " +                	
+                	"SELECT chat_private.*, CASE WHEN chat_private.direction = 0 THEN interlocutor.url_icon ELSE me.url_icon END AS icon, CASE WHEN chat_private.direction = 0 THEN interlocutor.name ELSE me.name END AS name  " +                	
                 	"FROM chat_private AS chat_private "+
-		           	"INNER JOIN db_profile.user AS user ON chat_private.user_id = user.server_id "+
+		           	"LEFT JOIN db_profile.user AS interlocutor ON "+interlocutor_id+" = interlocutor.server_id "+
+		           	"LEFT JOIN db_profile.user AS me ON "+Session.getUserId()+" = me.server_id "+
                 	"WHERE chat_private.user_id = "+interlocutor_id+" "+
-		           	"ORDER BY chat_private.date ASC";
+		           	"ORDER BY chat_private._id ASC";
                 
                 cursor=db.rawQuery(sql,null);
             	cursor.setNotificationUri(getContext().getContentResolver(),uri);
@@ -204,6 +217,7 @@ public class DBContentProvider extends ContentProvider{
             	Log.e("DBContentProvider", "query PRIVATE_USER_ID Exception e="+e);
             	e.printStackTrace();
             } 
+        	
         	
         	return cursor;
         }    
@@ -217,13 +231,21 @@ public class DBContentProvider extends ContentProvider{
         	
         	try{        	
         		db.execSQL("ATTACH DATABASE ? AS db_profile", new String[]{ getContext().getDatabasePath("profile.db").getPath() });
-        		    
+        	} catch (SQLException e) {
+            	Log.e("DBContentProvider", "query PRIVATE_USER_ID ATTACH DATABASE SQLException e="+e);
+            	e.printStackTrace();
+        	} catch (Exception e) {
+            	Log.e("DBContentProvider", "query PRIVATE_USER_ID ATTACH DATABASE Exception e="+e);
+            	e.printStackTrace();
+            } 
+        	
+        	try{	    
                 String sql=
                 	"SELECT chat_group.*, user.url_icon AS icon, user.name AS name  " +
                 	"FROM chat_group AS chat_group "+
 		           	"INNER JOIN db_profile.user AS user ON chat_group.sender = user.server_id "+
                 	"WHERE chat_group.group_id = "+group_id+" "+
-		           	"ORDER BY chat_group.date ASC";
+		           	"ORDER BY chat_group._id ASC";
                 
                 cursor=db.rawQuery(sql,null);
             	cursor.setNotificationUri(getContext().getContentResolver(),uri);
@@ -238,7 +260,7 @@ public class DBContentProvider extends ContentProvider{
         	
         	return cursor;
         }    
-        
+               
         
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 

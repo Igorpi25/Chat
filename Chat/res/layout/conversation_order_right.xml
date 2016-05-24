@@ -19,7 +19,7 @@
             android:layout_marginRight="@dimen/conversation_margin" >
 
             <ProgressBar
-                android:id="@+id/progressbar_processing"
+                android:id="@+id/conversation_order_right_progressbar_processing"
                 style="?android:attr/progressBarStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
                 android:visibility="gone" />
 
             <ImageView
-                android:id="@+id/imageview_failed"
+                android:id="@+id/conversation_order_right_imageview_failed"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_centerInParent="true"
@@ -242,7 +242,7 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/conversation_item_right_icon"
+        android:id="@+id/conversation_order_right_icon"
         android:layout_width="@dimen/conversation_icon"
         android:layout_height="@dimen/conversation_icon"
         android:scaleType="centerCrop"

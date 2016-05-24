@@ -12,7 +12,9 @@ import com.actionbarsherlock.view.MenuItem;
 import com.ivanov.tech.chat.Chat;
 import com.ivanov.tech.chat.R;
 import com.ivanov.tech.chat.reciever.MessageReciever;
+import com.ivanov.tech.chat.service.ChatService;
 import com.ivanov.tech.chat.ui.FragmentSplashScreen;
+import com.ivanov.tech.communicator.Communicator;
 import com.ivanov.tech.connection.Connection;
 import com.ivanov.tech.profile.Profile;
 import com.ivanov.tech.session.Session;
@@ -47,6 +49,7 @@ public class DemoActivity extends SherlockFragmentActivity {
 
         Session.Initialize(getApplicationContext(),url_testapikey,url_login,url_register);
         Profile.Initialize(getApplicationContext(),url_searchcontact,url_avatarupload,url_grouppanoramaupload,url_creategroup);
+        Communicator.Initialize(getApplicationContext(), ChatService.URL_SERVER, ChatService.class.getCanonicalName());
         
         setContentView(R.layout.activity_main);
         

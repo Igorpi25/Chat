@@ -1,10 +1,15 @@
 package com.ivanov.tech.chat.ui;
 
+import android.database.MatrixCursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -16,6 +21,7 @@ import com.ivanov.tech.multipletypesadapter.cursoradapter.CursorItemHolderButton
 import com.ivanov.tech.multipletypesadapter.cursoradapter.CursorItemHolderImageView;
 import com.ivanov.tech.multipletypesadapter.cursoradapter.CursorItemHolderText;
 import com.ivanov.tech.multipletypesadapter.cursoradapter.CursorMultipleTypesAdapter;
+import com.ivanov.tech.profile.provider.DBContract;
 
 public class FragmentMe extends com.ivanov.tech.profile.ui.FragmentMe{
 	
@@ -39,6 +45,14 @@ public class FragmentMe extends com.ivanov.tech.profile.ui.FragmentMe{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = null;
         view = inflater.inflate(R.layout.me, container, false);
+        
+        bottom_menu_recent=view.findViewById(R.id.me_recent);
+        bottom_menu_contacts=view.findViewById(R.id.me_contacts);
+        bottom_menu_me=view.findViewById(R.id.me_me);
+        
+        bottom_menu_recent.setOnClickListener(this);
+        bottom_menu_contacts.setOnClickListener(this);
+        bottom_menu_me.setOnClickListener(this);
                 
         listview=(ListView)view.findViewById(R.id.me_listview);
         
@@ -125,5 +139,30 @@ public class FragmentMe extends com.ivanov.tech.profile.ui.FragmentMe{
 		return false;
 	}
 	
-
+	@Override
+	protected MatrixCursor getMatrixCursor(int _id) throws JSONException{
+	   	
+    	Log.d(TAG, "getMatrixCursor");
+    	
+    	MatrixCursor matrixcursor=new MatrixCursor(new String[]{adapter.COLUMN_ID, adapter.COLUMN_TYPE, adapter.COLUMN_KEY, adapter.COLUMN_VALUE});    	
+    	    	
+    	if(cursor_user_server_id.getCount()<1)return matrixcursor;
+    	cursor_user_server_id.moveToFirst();
+    	
+    	JSONObject json;    
+    	
+    	json=new JSONObject("{ imageview:{image_url:'"+cursor_user_server_id.getString(cursor_user_server_id.getColumnIndex(DBContract.User.COLUMN_NAME_URL_AVATAR))+"' } }");    	
+    	matrixcursor.addRow(new Object[]{++_id,TYPE_AVATAR,IMAGEVIEW_KEY_AVATAR,json.toString()});
+    	
+    	json=new JSONObject("{value:{ text:'"+this.getString(R.string.fragment_me_upload_text)+"' }, key:{visible : false}, icon:{image_res:'"+android.R.drawable.ic_menu_upload+"'} }");    	
+    	matrixcursor.addRow(new Object[]{++_id,TYPE_TEXT_CLICKABLE,TEXT_KEY_UPLOAD_AVATAR,json.toString()});
+    	    	
+    	json=new JSONObject("{key:{ text:'"+this.getString(R.string.fragment_details_user_name)+"' }, value:{text:'"+cursor_user_server_id.getString(cursor_user_server_id.getColumnIndex(DBContract.User.COLUMN_NAME_NAME))+"'}, icon:{ } }");    	
+    	matrixcursor.addRow(new Object[]{++_id,TYPE_TEXT_CLICKABLE,TEXT_KEY_NAME,json.toString()});
+    	
+    	//json=new JSONObject("{button:{tag:'close', text:'"+getString(R.string.fragment_details_button_close_text)+"'} }");    	
+    	//matrixcursor.addRow(new Object[]{++_id,TYPE_BUTTON,0,json.toString()});
+    	
+    	return matrixcursor;
+    }
 }

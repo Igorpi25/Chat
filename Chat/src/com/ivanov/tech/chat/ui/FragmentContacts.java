@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.actionbarsherlock.view.Menu;
@@ -21,6 +22,8 @@ import com.ivanov.tech.chat.R;
 import com.ivanov.tech.multipletypesadapter.cursoradapter.CursorItemHolderHeader;
 import com.ivanov.tech.multipletypesadapter.cursoradapter.CursorItemHolderLink;
 import com.ivanov.tech.multipletypesadapter.cursoradapter.CursorMultipleTypesAdapter;
+import com.ivanov.tech.profile.Profile;
+import com.ivanov.tech.session.Session;
 
 public class FragmentContacts extends com.ivanov.tech.profile.ui.FragmentContacts{
 	
@@ -45,6 +48,14 @@ public class FragmentContacts extends com.ivanov.tech.profile.ui.FragmentContact
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = null;
         view = inflater.inflate(R.layout.contacts, container, false);
+        
+        bottom_menu_recent=view.findViewById(R.id.contacts_recent);
+        bottom_menu_contacts=view.findViewById(R.id.contacts_contacts);
+        bottom_menu_me=view.findViewById(R.id.contacts_me);
+        
+        bottom_menu_recent.setOnClickListener(this);
+        bottom_menu_contacts.setOnClickListener(this);
+        bottom_menu_me.setOnClickListener(this);
                 
         Log.d(TAG,"onCreateView");
         
@@ -67,6 +78,34 @@ public class FragmentContacts extends com.ivanov.tech.profile.ui.FragmentContact
         
         return view;
     }
+	
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    	
+    	switch(adapter.getType(adapter.getCursor())){
+		
+    	case TYPE_LINK_USER:{
+			int user_id=adapter.getKey(adapter.getCursor());
+			
+			Log.d(TAG,"onItemClick TYPE_LINK_USER user_id="+user_id);
+			
+			if(user_id==Session.getUserId()){
+				Profile.showMe(getActivity(), getFragmentManager(), R.id.main_container);
+			}else{
+				Chat.showConversationPrivate(user_id, getActivity(), getFragmentManager(), R.id.main_container);
+			}
+		}break;
+		
+		case TYPE_LINK_GROUP:{
+			int group_id=adapter.getKey(adapter.getCursor());
+			
+			Chat.showConversationGroup(group_id, getActivity(), getFragmentManager(), R.id.main_container);
+			
+		}break;
+		
+		
+		}
+	}
 	
 	@Override
 	public void onClick(View v) {

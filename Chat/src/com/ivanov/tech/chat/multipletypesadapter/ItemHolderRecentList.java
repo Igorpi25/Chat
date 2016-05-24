@@ -55,7 +55,7 @@ public class ItemHolderRecentList extends CursorItemHolder {
 		
 			LayoutInflater layoutinflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			
-			view= layoutinflater.inflate(R.layout.conversation_item_right, parent, false);
+			view= layoutinflater.inflate(R.layout.list_item, parent, false);
 		
 			textview_name = (TextView) view.findViewById(R.id.listview_item_name);
 	        textview_status = (TextView) view.findViewById(R.id.listview_item_status);

@@ -158,7 +158,7 @@ public class FragmentConversationGroup extends FragmentConversation{
 		        	
 			        	int type=( (getUserId()!=Session.getUserId()) )?TYPE_LEFT:TYPE_RIGHT;
 			        				        	
-			        	JSONObject json=new JSONObject("{userid:"+getUserId()+", message_id:"+getGroupMessageId()+" status:"+getStatus()+", message:{text:'"+getValue()+"'}, name:{text:'"+getName()+"'}, icon:{visible:true, image_url:'"+getIcon()+"'}, name:{visible:false}}");   
+			        	JSONObject json=new JSONObject("{userid:"+getUserId()+", message_id:"+getGroupMessageId()+", status:"+getStatus()+", message:{text:'"+getValue()+"'}, name:{text:'"+getName()+"'}, icon:{visible:true, image_url:'"+getIcon()+"'}, name:{visible:false}}");   
 			        	matrixcursor.addRow(new Object[]{++_id,type,0,json.toString()});
 			        	
 		        	}break;
@@ -224,12 +224,7 @@ public class FragmentConversationGroup extends FragmentConversation{
 	    	Log.d(TAG,"sendMessage JSONException e="+e);
 		}
 	    
-	    Intent intent=new Intent(getActivity().getApplicationContext(),ChatService.class);
-	    intent.putExtra("userid", Session.getUserId());
-	    intent.putExtra("transport", Chat.TRANSPORT_TEXT);
-	    intent.putExtra("json", json.toString());
-		
-		getActivity().startService(intent);
+	    Chat.sendCommunicatorMessage(getActivity().getApplicationContext(),json);
 	}
 	
 	@Override
@@ -249,12 +244,7 @@ public class FragmentConversationGroup extends FragmentConversation{
 	    	Log.d(TAG,"resendMessage JSONException e="+e);
 		}
 	    
-	    Intent intent=new Intent(getActivity().getApplicationContext(),ChatService.class);
-	    intent.putExtra("userid", Session.getUserId());
-	    intent.putExtra("transport", Chat.TRANSPORT_TEXT);
-	    intent.putExtra("json", json.toString());
-		
-		getActivity().startService(intent);
+	    Chat.sendCommunicatorMessage(getActivity().getApplicationContext(),json);
 	}
 	
 	//------------Notification---------------------
@@ -410,10 +400,14 @@ public class FragmentConversationGroup extends FragmentConversation{
 	            	
 	            break;            
 	    }
+		
+		if(isBottomReachedAndIdle()){
+    		//Log.d(TAG, "onLoadFinished smoothScrollToPosition");
+    		scrollDown();
+    	}
 	        
 	}
 	
-
 	@Override
 	public void onLoaderReset(Loader<Cursor> loader) {
 		super.onLoaderReset(loader);//LOADER_USER in FragmentConversation

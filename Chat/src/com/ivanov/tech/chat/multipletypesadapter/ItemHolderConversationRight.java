@@ -65,8 +65,8 @@ public class ItemHolderConversationRight extends CursorItemHolder {
 		
 	        textview_message = (TextView) view.findViewById(R.id.conversation_item_right_message);
 	        imageview_icon = (ImageView) view.findViewById(R.id.conversation_item_right_icon);
-	        processed = (View)view.findViewById(R.id.progressbar_processing);
-	        failed = (View)view.findViewById(R.id.imageview_failed);
+	        processed = (View)view.findViewById(R.id.conversation_item_right_progressbar_processing);
+	        failed = (View)view.findViewById(R.id.conversation_item_right_imageview_failed);
 	        
         
 		}else{

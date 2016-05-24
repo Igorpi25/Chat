@@ -7,12 +7,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
+import org.json.JSONObject;
+
 import com.ivanov.tech.chat.service.ChatService;
 import com.ivanov.tech.chat.ui.FragmentContacts;
 import com.ivanov.tech.chat.ui.FragmentConversationGroup;
 import com.ivanov.tech.chat.ui.FragmentConversationPrivate;
 import com.ivanov.tech.chat.ui.FragmentMe;
 import com.ivanov.tech.chat.ui.FragmentRecentList;
+import com.ivanov.tech.communicator.Communicator;
+import com.ivanov.tech.profile.Profile;
 import com.ivanov.tech.session.Session;
 
 public class Chat {
@@ -99,11 +103,35 @@ public class Chat {
 	
 //--------------Start Chat service-------------------- 
 	
+	public static void sendCommunicatorMessage(Context context, JSONObject json) {
+		
+		Log.d(TAG, "sendCommunicatorMessage json="+json.toString());
+		
+	    Intent intent;
+		try {
+			intent = new Intent(context,Class.forName(Communicator.getCommunicatorServiceClass()));
+			intent.putExtra("userid", Session.getUserId());
+		    intent.putExtra("transport", Chat.TRANSPORT_TEXT);
+		    intent.putExtra("json", json.toString());
+			
+		    context.startService(intent);
+		} catch (ClassNotFoundException e) {
+			Log.e(TAG, "sendCommunicatorMessage ClassNotFoundException e="+e);
+		}
+	   
+	}
+	
 	public static void startChatService(Context context){
-    	Intent intent=new Intent(context,ChatService.class);
-    	intent.putExtra("userid", Session.getUserId());
-    	Log.d(TAG,"startChatService userid="+Session.getUserId());
-    	context.startService(intent);
+    	Intent intent;
+		try {
+			intent = new Intent(context,Class.forName(Communicator.getCommunicatorServiceClass()));
+			intent.putExtra("userid", Session.getUserId());
+	    	Log.d(TAG,"startChatService userid="+Session.getUserId());
+	    	context.startService(intent);
+		} catch (ClassNotFoundException e) {
+			Log.e(TAG, "startChatService ClassNotFoundException e="+e);
+		}
+    	
     }
 	
 

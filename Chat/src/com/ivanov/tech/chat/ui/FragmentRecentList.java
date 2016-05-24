@@ -116,7 +116,7 @@ public class FragmentRecentList extends SherlockDialogFragment implements Loader
         adapter.addItemHolder(TYPE_PRIVATE, new ItemHolderRecentList(getActivity(),this,this));                
         adapter.addItemHolder(TYPE_GROUP, new ItemHolderRecentList(getActivity(),this,this)); 
                 
-        listview = (ListView)view.findViewById(R.id.conversation_listview);
+        listview = (ListView)view.findViewById(R.id.recent_listview);
         listview.setAdapter(adapter);
         listview.setOnItemClickListener(adapter);
         adapter.changeCursor(createMergeCursor());
@@ -225,6 +225,8 @@ public class FragmentRecentList extends SherlockDialogFragment implements Loader
 	//------------Preparing cursor---------------------------	
 		
 	protected Cursor createMergeCursor(){
+		
+		Log.d(TAG, "createMergeCursor");
     	
 		if(cursor_recent==null)return null;
 		
@@ -255,7 +257,7 @@ public class FragmentRecentList extends SherlockDialogFragment implements Loader
 	
     protected MatrixCursor getMatrixCursor(int _id){
 
-    	//Log.d(TAG, "getMatrixCursor");
+    	Log.d(TAG, "getMatrixCursor");
     	
     	if(cursor_recent==null)return null;
     	
@@ -269,7 +271,7 @@ public class FragmentRecentList extends SherlockDialogFragment implements Loader
     		try{
     		
 	    		String icon_url=cursor_recent.getString(cursor_recent.getColumnIndex("icon"));
-	    		String name_text=cursor_recent.getString(cursor_recent.getColumnIndex("name"));    		
+	    		String name_text=getNameText();    		
 	    		
 	    		String date_text=getSmartString(stringToTimestamp(cursor_recent.getString(cursor_recent.getColumnIndex("date"))));
 	    		boolean marker_visible=(cursor_recent.getInt(cursor_recent.getColumnIndex("status"))==DBContract.STATUS_UNREAD);
@@ -279,19 +281,21 @@ public class FragmentRecentList extends SherlockDialogFragment implements Loader
 	    		
 		    		case TYPE_PRIVATE :{ 
 			    			
-			    		String status_text=cursor_recent.getString(cursor_recent.getColumnIndex("value"));	    		
+			    		String status_text=getValueText();	    		
 			    		
-			    		JSONObject json=new JSONObject("{profile_id:"+profile_id+", status:{text:'"+status_text+"'}, marker:{visible:"+marker_visible+"}, icon:{image_url:'"+icon_url+"'}, name:{text:'"+name_text+"'}, date:{text:'"+date_text+"'} }");   
-			        	matrixcursor.addRow(new Object[]{++_id,TYPE_PRIVATE,profile_id,json.toString()});
+			    		JSONObject json=new JSONObject("{profile_id:"+profile_id+", status:{text:'"+status_text+"'}, marker:{visible:"+marker_visible+", image_res:"+R.drawable.drawable_marker_red+"}, icon:{image_url:'"+icon_url+"'}, name:{text:'"+name_text+"'}, date:{text:'"+date_text+"'} }");   
+			    		Log.d(TAG, "getMatrixCursor TYPE_PRIVATE "+json.toString());
+			    		matrixcursor.addRow(new Object[]{++_id,TYPE_PRIVATE,profile_id,json.toString()});
 			    			    		
 		    		}break;
 			    		
 		    		case TYPE_GROUP :{ 
 	
-		        		String sender_name=cursor_recent.getString(cursor_recent.getColumnIndex("sender_name"));
-			    		String status_text="["+sender_name+"] "+cursor_recent.getString(cursor_recent.getColumnIndex("value"));	    		
+		        		String sender_name=getSenderNameText();
+			    		String status_text="["+sender_name+"] "+getValueText();	    		
 			    		
-			    		JSONObject json=new JSONObject("{profile_id:"+profile_id+", status:{text:'"+status_text+"'}, marker:{visible:"+marker_visible+"}, icon:{image_url:'"+icon_url+"'}, name:{text:'"+name_text+"'}, date:{text:'"+date_text+"'} }");   
+			    		JSONObject json=new JSONObject("{profile_id:"+profile_id+", status:{text:'"+status_text+"'}, marker:{visible:"+marker_visible+", image_res:"+R.drawable.drawable_marker_red+"}, icon:{image_url:'"+icon_url+"'}, name:{text:'"+name_text+"'}, date:{text:'"+date_text+"'} }");
+			    		Log.d(TAG, "getMatrixCursor TYPE_GROUP "+json.toString());
 			        	matrixcursor.addRow(new Object[]{++_id,TYPE_GROUP,profile_id,json.toString()});
 			    		
 		    		}break;
@@ -308,6 +312,21 @@ public class FragmentRecentList extends SherlockDialogFragment implements Loader
     }
       
     //--------------Utilities----------------------
+    
+    public String getNameText(){
+		Log.e(TAG, "name="+cursor_recent.getString(cursor_recent.getColumnIndex("name")).replaceAll("\"", "\\\\\"").replaceAll("\'", "\\\\\'"));
+    	return cursor_recent.getString(cursor_recent.getColumnIndex("name")).replaceAll("\"", "\\\\\"").replaceAll("\'", "\\\\\'");
+    }
+    
+    public String getValueText(){
+		Log.e(TAG, "value="+cursor_recent.getString(cursor_recent.getColumnIndex("value")).replaceAll("\"", "\\\\\"").replaceAll("\'", "\\\\\'"));
+    	return cursor_recent.getString(cursor_recent.getColumnIndex("value")).replaceAll("\"", "\\\\\"").replaceAll("\'", "\\\\\'");
+    }
+    
+    public String getSenderNameText(){
+		Log.e(TAG, "sender_name="+cursor_recent.getString(cursor_recent.getColumnIndex("sender_name")).replaceAll("\"", "\\\\\"").replaceAll("\'", "\\\\\'"));
+    	return cursor_recent.getString(cursor_recent.getColumnIndex("sender_name")).replaceAll("\"", "\\\\\"").replaceAll("\'", "\\\\\'");
+    }
     
     protected void addContact(){
     	Profile.showSearchContact(getActivity(),getActivity().getSupportFragmentManager(),R.id.main_container);
