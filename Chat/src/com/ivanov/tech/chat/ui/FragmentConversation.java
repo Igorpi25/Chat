@@ -115,7 +115,7 @@ public abstract class FragmentConversation extends SherlockDialogFragment implem
         
         return view;
     }
-
+    
     @Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		
@@ -227,7 +227,7 @@ public abstract class FragmentConversation extends SherlockDialogFragment implem
     
     @Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {}
-
+    
     @Override
 	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
@@ -239,11 +239,11 @@ public abstract class FragmentConversation extends SherlockDialogFragment implem
     	}
 			
 	}
-
+    
     //------------Conversation Building---------------------------------
     
     protected abstract Cursor createMergeCursor();
-
+    
     //-----------------WebSocket---------------------------------
     
     protected abstract void sendMessage(String text);
@@ -372,7 +372,7 @@ public abstract class FragmentConversation extends SherlockDialogFragment implem
 		
 		return null;				
 	}
-	    
+	
 	@Override
 	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 	    	    

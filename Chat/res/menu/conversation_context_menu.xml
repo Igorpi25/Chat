@@ -4,5 +4,4 @@
         android:title="@string/conversation_context_menu_copy"/>
     <item android:id="@+id/conversation_context_menu_delete"
         android:title="@string/conversation_context_menu_delete"/>
-
 </menu>
