@@ -54,6 +54,8 @@ public abstract class FragmentConversation extends SherlockDialogFragment implem
     private static final String TAG = FragmentConversation.class
             .getSimpleName();    
 
+    private static final int CONTEXT_MENU_GROUP_ID = 1;
+    
 	public static final int LOADER_USERS = 10;
     
     protected static final int TYPE_LEFT = 0;
@@ -184,36 +186,42 @@ public abstract class FragmentConversation extends SherlockDialogFragment implem
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getSherlockActivity().getMenuInflater();
-        inflater.inflate(R.menu.conversation_context_menu, menu);
+        
+        menu.add(CONTEXT_MENU_GROUP_ID, R.id.conversation_context_menu_copy, 1, R.string.conversation_context_menu_copy);
+		menu.add(CONTEXT_MENU_GROUP_ID, R.id.conversation_context_menu_delete, 2, R.string.conversation_context_menu_delete);
+        
     }
     
     @Override
     public boolean onContextItemSelected(android.view.MenuItem item) {
-        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-        
-        adapter.getCursor().moveToPosition(info.position);
-        
-        JSONObject json;
-		try {
-			json = new JSONObject(adapter.getValue(adapter.getCursor()));
-		
-	    	int messageid=json.getInt("message_id");
-	    	
-	        if(item.getItemId() ==R.id.conversation_context_menu_copy){	        		
-	        	String value=json.getJSONObject("message").getString("text");
-	            copyMessage(value);            	
-	            return true;
-	        }
-	        else if(item.getItemId() ==R.id.conversation_context_menu_delete){
-	            deleteMessage(messageid);
-	            return true;
-	        }        
-        
-		} catch (JSONException e) {
-			Log.e(TAG, "onContextItemSelected JSONException e="+e);	
-		}
-		
+    	
+    	if (item.getGroupId() == CONTEXT_MENU_GROUP_ID) {
+    	
+	        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+	        
+	        adapter.getCursor().moveToPosition(info.position);
+	        
+	        JSONObject json;
+			try {
+				json = new JSONObject(adapter.getValue(adapter.getCursor()));
+			
+		    	int messageid=json.getInt("message_id");
+		    	
+		        if(item.getItemId() ==R.id.conversation_context_menu_copy){	        		
+		        	String value=json.getJSONObject("message").getString("text");
+		            copyMessage(value);            	
+		            return true;
+		        }
+		        else if(item.getItemId() ==R.id.conversation_context_menu_delete){
+		            deleteMessage(messageid);
+		            return true;
+		        }        
+	        
+			} catch (JSONException e) {
+				Log.e(TAG, "onContextItemSelected JSONException e="+e);	
+			}
+    	}
+    	
 		return super.onContextItemSelected(item);
     }
     
