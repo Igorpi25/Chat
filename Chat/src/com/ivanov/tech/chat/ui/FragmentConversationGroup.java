@@ -62,7 +62,7 @@ public class FragmentConversationGroup extends FragmentConversation implements L
             .getSimpleName();    
 
 	public static final int LOADER_USERS = 11;
-	public static final int LOADER_GROUP = 12;
+	public static final int LOADER_GROUP_ID = 12;
     public static final int LOADER_CHAT_GROUP = 13;
 	
     
@@ -89,7 +89,7 @@ public class FragmentConversationGroup extends FragmentConversation implements L
         
         getLoaderManager().initLoader(LOADER_CHAT_GROUP, null, this);
         getLoaderManager().initLoader(LOADER_USERS, null, this);
-        getLoaderManager().initLoader(LOADER_GROUP, null, this);
+        getLoaderManager().initLoader(LOADER_GROUP_ID, null, this);
     }
     
     public static FragmentConversationGroup newInstance(int group_id){
@@ -309,7 +309,11 @@ public class FragmentConversationGroup extends FragmentConversation implements L
     	}
     }
 
-    //----------------------------------------------
+    //--------------Utils-----------------------
+	
+  	private void updateMenuTitle(String title){
+      	getSherlockActivity().getSupportActionBar().setTitle(title);
+    }
 
 	public int getUserId(){
 		int user_id=0;
@@ -353,9 +357,6 @@ public class FragmentConversationGroup extends FragmentConversation implements L
 	
 	//------------------------Loader<Group>--------------------------
 	
-
-//------------Loader<Group>-------------------
-    
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 	    	
@@ -370,11 +371,16 @@ public class FragmentConversationGroup extends FragmentConversation implements L
 	            return cursorLoader;
 		 	}
 	            
-		 	case LOADER_GROUP:{   
-	            Log.d(TAG, "onCreateLoader LOADER_GROUP");
+		 	case LOADER_GROUP_ID:{   
+	            Log.d(TAG, "onCreateLoader LOADER_GROUP_ID");
+	            
+	            String[] projection = new String[]{
+                        "_id",
+                        "name"
+                };
 	            
 	            CursorLoader cursorLoader = new CursorLoader(getActivity(),
-	            com.ivanov.tech.profile.provider.DBContentProvider.URI_GROUP, null, null, null, null);
+	            Uri.parse(com.ivanov.tech.profile.provider.DBContentProvider.URI_GROUP+"/"+group_id), projection, null, null, null);
 	            
 	            return cursorLoader;
 		 	}
@@ -416,9 +422,25 @@ public class FragmentConversationGroup extends FragmentConversation implements L
 	    
 		switch(loader.getId()){
 			
-			case LOADER_USERS:    
-			case LOADER_GROUP: 
-	        	Log.d(TAG, "onLoadFinished LOADER_USERS or LOADER_GROUP");
+			case LOADER_USERS:   	        	
+				
+	        	Log.d(TAG, "onLoadFinished LOADER_USERS");	  
+	        	
+	        	//На случай если вдруг изменилась иконка или имя одногрупника
+	        	getLoaderManager().restartLoader(LOADER_CHAT_GROUP, null, this);
+	        	
+	            return;
+	            
+			case LOADER_GROUP_ID: 
+	        	
+	        	Log.d(TAG, "onLoadFinished LOADER_GROUP_ID");
+	        	
+	        	//Меняем надпись меню
+	        	if( (data!=null)&&(data.getCount()>0) ){
+	        		data.moveToFirst();
+	        		String title=data.getString(data.getColumnIndex("name"));
+	        		updateMenuTitle(title);
+	        	}
 	        	
 	        	//На случай если вдруг изменилась иконка или имя одногрупника
 	        	getLoaderManager().restartLoader(LOADER_CHAT_GROUP, null, this);

@@ -62,7 +62,9 @@ public class FragmentConversationPrivate extends FragmentConversation implements
 
 	private static final String TAG = FragmentConversationPrivate.class
             .getSimpleName();    
+	
 	public static final int LOADER_USERS = 11;
+	public static final int LOADER_INTERLOCUTOR = 12;
 	public static final int LOADER_CHAT_PRIVATE = 13;
     
     public static final long DATE_SPAN=60*30*1000;//30 minites in milliseconds
@@ -86,6 +88,7 @@ public class FragmentConversationPrivate extends FragmentConversation implements
         setHasOptionsMenu(true);
         
        getLoaderManager().initLoader(LOADER_CHAT_PRIVATE, null, this); 
+       getLoaderManager().initLoader(LOADER_INTERLOCUTOR, null, this);
        getLoaderManager().initLoader(LOADER_USERS, null, this);
        
     }
@@ -282,7 +285,7 @@ public class FragmentConversationPrivate extends FragmentConversation implements
    		getActivity().getContentResolver().update(uri,null,null,null);
    	}	
     
-//--------------WebSocket-------------------------
+//--------------WebSocket------------------
     
 	@Override
 	protected void sendMessage(String text) {
@@ -320,7 +323,13 @@ public class FragmentConversationPrivate extends FragmentConversation implements
 	    
 	    Chat.sendCommunicatorMessage(getActivity().getApplicationContext(),json);
 	}
-		
+			
+//--------------Utils-----------------------
+	
+	private void updateMenuTitle(String title){
+    	getSherlockActivity().getSupportActionBar().setTitle(title);
+    }
+    	
 	public int getUserId(){
 		int user_id=0;
 		
@@ -377,6 +386,14 @@ public class FragmentConversationPrivate extends FragmentConversation implements
 	    
 		switch(id) {
 		
+			case LOADER_INTERLOCUTOR:{	          		 		
+	            Log.d(TAG, "onCreateLoader LOADER_INTERLOCUTOR");	
+	            
+	            CursorLoader cursorLoader = new CursorLoader(getActivity(),Uri.parse(com.ivanov.tech.profile.provider.DBContentProvider.URI_USER+"/"+interlocutor_id), null, null, null, null);
+	         
+	            return cursorLoader;
+		 	}
+			
 			case LOADER_USERS:{	          		 		
 	            Log.d(TAG, "onCreateLoader LOADER_USERS");	
 	            
@@ -421,6 +438,17 @@ public class FragmentConversationPrivate extends FragmentConversation implements
 	    
 		switch(loader.getId()){            
 		
+			case LOADER_INTERLOCUTOR: 
+	        	Log.d(TAG, "onLoadFinished LOADER_INTERLOCUTOR");
+	        	
+	        	if( (data!=null)&&(data.getCount()>0) ){
+	        		data.moveToFirst();
+	        		String title=data.getString(data.getColumnIndex("name"));
+	        		updateMenuTitle(title);
+	        	}
+	            	
+	            return;
+	            
 			case LOADER_USERS: 
 	        	Log.d(TAG, "onLoadFinished LOADER_USERS");
 	        	
