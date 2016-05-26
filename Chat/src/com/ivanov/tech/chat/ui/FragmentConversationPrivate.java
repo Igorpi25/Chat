@@ -62,8 +62,8 @@ public class FragmentConversationPrivate extends FragmentConversation implements
 
 	private static final String TAG = FragmentConversationPrivate.class
             .getSimpleName();    
-
-	public static final int LOADER_PRIVATE = 12;
+	public static final int LOADER_USERS = 11;
+	public static final int LOADER_CHAT_PRIVATE = 13;
     
     public static final long DATE_SPAN=60*30*1000;//30 minites in milliseconds
     
@@ -85,7 +85,9 @@ public class FragmentConversationPrivate extends FragmentConversation implements
         
         setHasOptionsMenu(true);
         
-        getLoaderManager().initLoader(LOADER_PRIVATE, null, this);
+       getLoaderManager().initLoader(LOADER_CHAT_PRIVATE, null, this); 
+       getLoaderManager().initLoader(LOADER_USERS, null, this);
+       
     }
 
     public static FragmentConversationPrivate newInstance(int user_id){
@@ -374,7 +376,17 @@ public class FragmentConversationPrivate extends FragmentConversation implements
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 	    
 		switch(id) {
-            case LOADER_PRIVATE:
+		
+			case LOADER_USERS:{	          		 		
+	            Log.d(TAG, "onCreateLoader LOADER_USERS");	
+	            
+	            CursorLoader cursorLoader = new CursorLoader(getActivity(),
+	            com.ivanov.tech.profile.provider.DBContentProvider.URI_USER, null, null, null, null);
+	         
+	            return cursorLoader;
+		 	}
+	
+            case LOADER_CHAT_PRIVATE:
             	String[] projection=null;
                 Uri uri=null;
 
@@ -400,16 +412,24 @@ public class FragmentConversationPrivate extends FragmentConversation implements
                 return cursorLoader;                
 	    }
 		
-		return super.onCreateLoader(id, args);//LOADER_USER		
+		return null;
+		
 	}
 	    
 	@Override
 	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 	    
-		super.onLoadFinished(loader, data);//LOADER_USER
-		
 		switch(loader.getId()){            
-	        case LOADER_PRIVATE:    
+		
+			case LOADER_USERS: 
+	        	Log.d(TAG, "onLoadFinished LOADER_USERS");
+	        	
+	        	//На случай если вдруг изменилась иконка или имя собеседника
+	        	getLoaderManager().restartLoader(LOADER_CHAT_PRIVATE, null, this);
+	            	
+	            return;
+			
+	        case LOADER_CHAT_PRIVATE:    
 	        	//Log.d(TAG, "onLoadFinished LOADER_PRIVATE");
 	        	
 	        	privatecursor=data;

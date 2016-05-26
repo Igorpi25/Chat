@@ -265,6 +265,8 @@ public class FragmentRecentList extends SherlockDialogFragment implements Loader
     	
     	if((cursor_recent==null)||(cursor_recent.getCount()<1))return matrixcursor;
     	
+    	Log.d(TAG, "getMatrixCursor count="+cursor_recent.getCount());
+    	
     	cursor_recent.moveToFirst();    	
     	do{    	
     		
@@ -482,14 +484,16 @@ public class FragmentRecentList extends SherlockDialogFragment implements Loader
             	
             	cursor_recent=data;            	
             	//Build conversationcursor and swap adapter 
-	        	adapter.changeCursor(createMergeCursor());
+	        	adapter.swapCursor(createMergeCursor());
             	
                 break;
             case LOADER_USER: 
             case LOADER_GROUP:    
         		Log.d(TAG, "onLoadFinished LOADER_GROUP");
         		
-	        	adapter.changeCursor(createMergeCursor());
+
+	        	//На случай если вдруг изменилась иконка или имя контакта
+	        	getLoaderManager().restartLoader(LOADER_RECENTLIST, null, this);
         		
                 break;            
             

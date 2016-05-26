@@ -43,20 +43,17 @@ import com.ivanov.tech.chat.multipletypesadapter.ItemHolderConversationNotificat
 import com.ivanov.tech.chat.multipletypesadapter.ItemHolderConversationRight;
 import com.ivanov.tech.multipletypesadapter.cursoradapter.CursorMultipleTypesAdapter;
 import com.ivanov.tech.profile.Profile;
-import com.ivanov.tech.profile.provider.DBContentProvider;
 import com.ivanov.tech.session.Session;
 
 /**
  * Created by Igor on 09.05.15.
  */
-public abstract class FragmentConversation extends SherlockDialogFragment implements OnScrollListener, OnClickListener, OnItemClickListener, LoaderManager.LoaderCallbacks<Cursor>{
+public abstract class FragmentConversation extends SherlockDialogFragment implements OnScrollListener, OnClickListener, OnItemClickListener{
 
     private static final String TAG = FragmentConversation.class
             .getSimpleName();    
 
     private static final int CONTEXT_MENU_GROUP_ID = 1;
-    
-	public static final int LOADER_USERS = 10;
     
     protected static final int TYPE_LEFT = 0;
     protected static final int TYPE_RIGHT =1;
@@ -78,7 +75,7 @@ public abstract class FragmentConversation extends SherlockDialogFragment implem
         
         setHasOptionsMenu(true);
         
-        getLoaderManager().initLoader(LOADER_USERS, null, this);
+        
     }
     
     @Override
@@ -354,42 +351,4 @@ public abstract class FragmentConversation extends SherlockDialogFragment implem
   	 	return timestamp;
   	}
   	
-  	//------------Loader<Users>-------------------
-  	
-  	@Override
-	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-	    	
-		switch(id) {
-            case LOADER_USERS:
-            	          
-                Log.d(TAG, "onCreateLoader LOADER_USERS");
-                
-                CursorLoader cursorLoader = new CursorLoader(getActivity(),
-                DBContentProvider.URI_USER, null, null, null, null);
-                
-                return cursorLoader;                
-	    }
-		
-		return null;				
-	}
-	
-	@Override
-	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-	    	    
-		switch(loader.getId()){            
-	        case LOADER_USERS:    
-	        	Log.d(TAG, "onLoadFinished LOADER_USERS");
-	        	
-	        	//На случай если вдруг изменилась иконка или имя собеседника
-	        	adapter.changeCursor(createMergeCursor());
-	            	
-	            break;            
-	    }
-	        
-	}
-
-	@Override
-	public void onLoaderReset(Loader<Cursor> loader) {
-		  
-	}
 }

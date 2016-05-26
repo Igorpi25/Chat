@@ -43,6 +43,7 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.text.format.DateUtils;
@@ -55,12 +56,15 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class FragmentConversationGroup extends FragmentConversation{
+public class FragmentConversationGroup extends FragmentConversation implements LoaderManager.LoaderCallbacks<Cursor>{
 
 	private static final String TAG = FragmentConversationGroup.class
             .getSimpleName();    
 
-	public static final int LOADER_GROUP = 13;
+	public static final int LOADER_USERS = 11;
+	public static final int LOADER_GROUP = 12;
+    public static final int LOADER_CHAT_GROUP = 13;
+	
     
 	public static final long DATE_SPAN=60*30*1000;//30 minites in milliseconds
     
@@ -82,6 +86,9 @@ public class FragmentConversationGroup extends FragmentConversation{
         
         setHasOptionsMenu(true);
         
+        
+        getLoaderManager().initLoader(LOADER_CHAT_GROUP, null, this);
+        getLoaderManager().initLoader(LOADER_USERS, null, this);
         getLoaderManager().initLoader(LOADER_GROUP, null, this);
     }
     
@@ -353,7 +360,26 @@ public class FragmentConversationGroup extends FragmentConversation{
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 	    	
 		switch(id) {
-            case LOADER_GROUP:
+
+		 	case LOADER_USERS:{	          		 		
+	            Log.d(TAG, "onCreateLoader LOADER_USERS");	
+	            
+	            CursorLoader cursorLoader = new CursorLoader(getActivity(),
+	            com.ivanov.tech.profile.provider.DBContentProvider.URI_USER, null, null, null, null);
+             
+	            return cursorLoader;
+		 	}
+	            
+		 	case LOADER_GROUP:{   
+	            Log.d(TAG, "onCreateLoader LOADER_GROUP");
+	            
+	            CursorLoader cursorLoader = new CursorLoader(getActivity(),
+	            com.ivanov.tech.profile.provider.DBContentProvider.URI_GROUP, null, null, null, null);
+	            
+	            return cursorLoader;
+		 	}
+		
+            case LOADER_CHAT_GROUP:
             	String[] projection=null;
                 Uri uri=null;
 
@@ -371,7 +397,7 @@ public class FragmentConversationGroup extends FragmentConversation{
                 };
                 uri = Uri.parse(DBContentProvider.URI_GROUP+"/"+group_id);
                                 
-                Log.d(TAG, "onCreateLoader LOADER_GROUP uri="+uri.toString());
+                Log.d(TAG, "onCreateLoader LOADER_CHAT_GROUP uri="+uri.toString());
                 
                 CursorLoader cursorLoader = new CursorLoader(getActivity(),
                         uri, projection, null, null, null);
@@ -379,24 +405,32 @@ public class FragmentConversationGroup extends FragmentConversation{
                 return cursorLoader;                
 	    }		
 		
-	    return super.onCreateLoader(id, args);//LOADER_USER in FragmentConversation
+		return null;
+		
 	}
 	    
 	@Override
 	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 	    
-		super.onLoadFinished(loader, data);//LOADER_USER in FragmentConversation
-		
 		Log.d(TAG, "onLoadFinished loaderid="+loader.getId());
 	    
-		switch(loader.getId()){            
-	        case LOADER_GROUP:    
+		switch(loader.getId()){
+			
+			case LOADER_USERS:    
+			case LOADER_GROUP: 
+	        	Log.d(TAG, "onLoadFinished LOADER_USERS or LOADER_GROUP");
+	        	
+	        	//На случай если вдруг изменилась иконка или имя одногрупника
+	        	getLoaderManager().restartLoader(LOADER_CHAT_GROUP, null, this);
+	            	
+	            return;
+	            
+	        case LOADER_CHAT_GROUP:    
 	        	Log.d(TAG, "onLoadFinished LOADER_GROUP");
 	        	
-	        	groupcursor=data;
-	        	
+	        	groupcursor=data;	        	
 	        	//Build conversationcursor and swap adapter 
-	        	adapter.changeCursor(createMergeCursor());
+	        	adapter.swapCursor(createMergeCursor());
 	            	
 	            break;            
 	    }
@@ -410,8 +444,7 @@ public class FragmentConversationGroup extends FragmentConversation{
 	
 	@Override
 	public void onLoaderReset(Loader<Cursor> loader) {
-		super.onLoaderReset(loader);//LOADER_USER in FragmentConversation
-	    	
+			
 	    Log.d(TAG, "LOADER_GROUP onLoaderReset");    
 	}
 
