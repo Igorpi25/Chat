@@ -151,7 +151,7 @@ public class FragmentContacts extends com.ivanov.tech.profile.ui.FragmentContact
         getSherlockActivity().getSupportActionBar().show();
         getSherlockActivity().getSupportActionBar().setHomeButtonEnabled(false);
         getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        getSherlockActivity().getSupportActionBar().setTitle("LetsRace-Chat");
+        getSherlockActivity().getSupportActionBar().setTitle(R.string.app_name);
     }
     
 	@Override

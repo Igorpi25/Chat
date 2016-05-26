@@ -201,7 +201,7 @@ public class FragmentRecentList extends SherlockDialogFragment implements Loader
         getSherlockActivity().getSupportActionBar().show();
         getSherlockActivity().getSupportActionBar().setHomeButtonEnabled(false);
         getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        getSherlockActivity().getSupportActionBar().setTitle("LetsRace-Chat");
+        getSherlockActivity().getSupportActionBar().setTitle(R.string.app_name);
     }
 	    
 	@Override

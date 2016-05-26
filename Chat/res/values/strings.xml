@@ -26,7 +26,7 @@
     <string name="bottom_menu_contacts_text">Contacts</string>
     <string name="bottom_menu_me_text">Me</string>
     
-    <string name="recent_listview_empty">Welcome to LetsRace! To start chat click Contacts-button in the bottom</string>
+    <string name="recent_listview_empty">Welcome to chat-demo! To start chat click Contacts-button in the bottom</string>
     
     
 </resources>
