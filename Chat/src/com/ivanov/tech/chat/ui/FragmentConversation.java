@@ -26,6 +26,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
@@ -111,6 +112,11 @@ public abstract class FragmentConversation extends SherlockDialogFragment implem
         adapter.changeCursor(createMergeCursor());
         
         return view;
+    }
+    
+    public void onStop(){
+    	super.onStop();    	
+    	hideKeyboard();
     }
     
     @Override
@@ -293,6 +299,16 @@ public abstract class FragmentConversation extends SherlockDialogFragment implem
     	
     }
  
+    void hideKeyboard(){
+    	try {
+            InputMethodManager input = (InputMethodManager) getActivity()
+                    .getSystemService(getActivity().INPUT_METHOD_SERVICE);
+            input.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     //--------DateTime Utils------------------------
 	
   	protected String timestampToString(long timestamp){
