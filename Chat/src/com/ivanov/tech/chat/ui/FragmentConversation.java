@@ -17,6 +17,8 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -49,7 +51,7 @@ import com.ivanov.tech.session.Session;
 /**
  * Created by Igor on 09.05.15.
  */
-public abstract class FragmentConversation extends SherlockDialogFragment implements OnScrollListener, OnClickListener, OnItemClickListener{
+public abstract class FragmentConversation extends SherlockDialogFragment implements OnScrollListener, OnClickListener, OnItemClickListener, TextWatcher{
 
     private static final String TAG = FragmentConversation.class
             .getSimpleName();    
@@ -92,6 +94,8 @@ public abstract class FragmentConversation extends SherlockDialogFragment implem
         button_smile.setOnClickListener(this);
         
         edittext=(EditText)view.findViewById(R.id.conversation_edittext);
+        
+        edittext.addTextChangedListener(this);
        
         adapter=new CursorMultipleTypesAdapter(getActivity(),null,adapter.FLAG_AUTO_REQUERY);
         
@@ -117,6 +121,11 @@ public abstract class FragmentConversation extends SherlockDialogFragment implem
     public void onStop(){
     	super.onStop();    	
     	hideKeyboard();
+    }
+    
+    public void onStart(){
+    	super.onStart();    	
+    	afterTextChanged(edittext.getEditableText());
     }
     
     @Override
@@ -164,23 +173,18 @@ public abstract class FragmentConversation extends SherlockDialogFragment implem
     	if(v.getId()==button_send.getId()){
     		String text=edittext.getText().toString();
     		
-    		//Callback on abstract method
-    		sendMessage(text);
+    		if(!isNullOrBlank(text)){
+	    		//Callback on abstract method
+	    		sendMessage(text);
+    		}
     		
     		edittext.setText("");
     		
-    		scrollDown();
-    		
-//    		InputMethodManager inputManager = 
-//    		        (InputMethodManager) getActivity().
-//    		            getSystemService(Context.INPUT_METHOD_SERVICE); 
-//    		inputManager.hideSoftInputFromWindow(
-//    				getActivity().getCurrentFocus().getWindowToken(),
-//    		        InputMethodManager.HIDE_NOT_ALWAYS); 
+    		scrollDown();    		
     	}    
     	
     	if(v.getId()==button_smile.getId()){
-    		Toast.makeText(getActivity(), "Sorry, function is unavailable on this version", Toast.LENGTH_LONG).show();
+    		Toast.makeText(getActivity(), "Sorry, function is unavailable in this version", Toast.LENGTH_LONG).show();
     	}   
     	
 	}
@@ -243,6 +247,27 @@ public abstract class FragmentConversation extends SherlockDialogFragment implem
 			
 	}
     
+    @Override
+	public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+		
+	}
+
+	@Override
+	public void onTextChanged(CharSequence s, int start, int before, int count) {
+		
+	}
+
+	@Override
+	public void afterTextChanged(Editable s) {
+		String text=s.toString();
+		button_send.setEnabled(!isNullOrBlank(text));
+		if(isNullOrBlank(text)){
+			button_send.setTextColor(getResources().getColor(R.color.color_gray_light));
+		}else{
+			button_send.setTextColor(getResources().getColor(R.color.color_gray_dark));
+		}
+	}
+	
     //------------Conversation Building---------------------------------
     
     protected abstract Cursor createMergeCursor();
@@ -254,6 +279,11 @@ public abstract class FragmentConversation extends SherlockDialogFragment implem
     protected abstract void resendMessage(int messageId,String text); //It depends on DB Table (whether Private or Group)
    
     //-----------------Utilities--------------
+    
+    private static boolean isNullOrBlank(String s)
+    {
+      return (s==null || s.trim().equals(""));
+    }
     
     public boolean isBottomReachedAndIdle(){
     	return ( (bottomreached));
