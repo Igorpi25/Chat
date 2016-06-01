@@ -4,9 +4,9 @@ Chat
 
 Это движок мессенжера, построенный с использованием open-source библиотек. Движок польностью модульный. Каждый модуль представляет отдельный open-source проект на Github, с описанинием и запускаемым демонстрационным приложением.
 
-Демонстрационное приложение можете загрузить из GooglePlay
+Демонстрационное приложение можете загрузить из [GooglePlay][11]
 
-<img src="http://igorpi25.ru/screenshot/chat/google_play_icon.png" height="60" />
+[<img src="http://igorpi25.ru/screenshot/chat/google_play_icon.png" height="60" />][11]
 
 Архитектура
 -----------
@@ -114,3 +114,6 @@ See the [LICENSE](LICENSE) file for license rights and limitations (Apache).
 [85]: https://github.com/Igorpi25/Profile
 [9]: https://github.com/bumptech/glide
 [10]:https://code.google.com/archive/p/httpclientandroidlib/
+
+[11]:https://play.google.com/store/apps/details?id=com.ivanov.tech.chat
+
