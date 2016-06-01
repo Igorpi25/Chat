@@ -1,8 +1,12 @@
 Chat
 ====
-<img src="http://igorpi25.ru/screenshot/chat/banner.jpg" height="200" />
+<img src="http://igorpi25.ru/screenshot/chat/banner_github.png" height="200" />
 
 Это движок мессенжера, построенный с использованием open-source библиотек. Движок польностью модульный. Каждый модуль представляет отдельный open-source проект на Github, с описанинием и запускаемым демонстрационным приложением.
+
+Демонстрационное приложение можете загрузить из GooglePlay
+
+<img src="http://igorpi25.ru/screenshot/chat/google_play_icon.png" height="60" />
 
 Архитектура
 -----------
@@ -64,7 +68,7 @@ UI элементы из Profile
 
 Проект содержит много git-подмодулей, которые при неумелом использовании могут принести неприятности. Поэтому делайте как я, тогда с git-подмодулями проблем не будет
 
-1. Для клонирования репозитория, автор рекомендует использовать командную строку, вместо EGit Eclipse. Т.к. проект содержит настройки workspace в папке репозитория, и репозитории подмодулей находятся НЕ в ветке **master**, и подмодули тоже имеют свои подмодули. В командной строке выполните:
+1. Для клонирования репозитория, автор рекомендует использовать командную строку, вместо EGit Eclipse или AndroidStudio. Т.к. проект содержит настройки workspace в папке репозитория, и репозитории подмодулей находятся НЕ в ветке **master**, и подмодули тоже имеют свои подмодули. В командной строке выполните:
 	```
 $ git clone git://github.com/Igorpi25/Chat.git Chat
 $ cd Chat
@@ -90,6 +94,10 @@ $ git submodule update --remote --recursive --init
 * [MultipleTypesAdapter][81] - вся архитектура UI-элементов построена на этой библиотеке
 * [Profile][85] - профили пользователся и группы. Модуль обеспечивает элементы "социальной сети"
 
+License
+-------
+
+See the [LICENSE](LICENSE) file for license rights and limitations (Apache).
 
 [1]: http://actionbarsherlock.com/
 [2]: https://github.com/mcxiaoke/android-volley
