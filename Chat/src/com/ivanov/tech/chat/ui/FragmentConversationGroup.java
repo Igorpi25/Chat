@@ -11,10 +11,8 @@ import java.util.HashMap;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
+import android.support.v7.app.AppCompatActivity;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.codebutler.android_websockets.WebSocketClient;
 import com.codebutler.android_websockets.WebSocketClient.Listener;
 import com.codebutler.android_websockets.WebSocketClient.OutgoingListener;
@@ -49,6 +47,9 @@ import android.support.v4.content.Loader;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -107,10 +108,10 @@ public class FragmentConversationGroup extends FragmentConversation implements L
         menuDetails.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         menuDetails.setIcon(R.drawable.ic_menu_group);
 		 
-        getSherlockActivity().getSupportActionBar().show();
-        getSherlockActivity().getSupportActionBar().setHomeButtonEnabled(true);
-        getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSherlockActivity().getSupportActionBar().setTitle("Group conversation");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Group conversation");
     }
 	    
 	@Override
@@ -312,7 +313,7 @@ public class FragmentConversationGroup extends FragmentConversation implements L
     //--------------Utils-----------------------
 	
   	private void updateMenuTitle(String title){
-      	getSherlockActivity().getSupportActionBar().setTitle(title);
+  		((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(title);
     }
 
 	public int getUserId(){

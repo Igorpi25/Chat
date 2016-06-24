@@ -1,14 +1,14 @@
 package com.ivanov.tech.chat.ui;
 
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.ivanov.tech.chat.R;
 
-public class FragmentSplashScreen extends SherlockDialogFragment{
+public class FragmentSplashScreen extends DialogFragment{
 	private static final String TAG = FragmentSplashScreen.class
             .getSimpleName();   
 

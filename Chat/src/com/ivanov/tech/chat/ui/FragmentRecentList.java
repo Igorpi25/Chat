@@ -17,6 +17,7 @@ import android.database.MatrixCursor;
 import android.database.MergeCursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -24,6 +25,10 @@ import android.support.v4.content.Loader;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
@@ -32,13 +37,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.support.v7.app.AppCompatActivity;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockDialogFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.SubMenu;
 import com.bumptech.glide.Glide;
 import com.ivanov.tech.chat.Chat;
 import com.ivanov.tech.chat.R;
@@ -56,7 +56,7 @@ import com.ivanov.tech.profile.ui.FragmentSelectUsers;
 import com.ivanov.tech.session.Session;
 
 
-public class FragmentRecentList extends SherlockDialogFragment implements LoaderManager.LoaderCallbacks<Cursor>, OnClickListener, OnItemClickListener {
+public class FragmentRecentList extends DialogFragment implements LoaderManager.LoaderCallbacks<Cursor>, OnClickListener, OnItemClickListener {
 	
 	private static final String TAG = FragmentRecentList.class
             .getSimpleName();    
@@ -198,10 +198,10 @@ public class FragmentRecentList extends SherlockDialogFragment implements Loader
 		menuAddGroup.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		menuAddGroup.setIcon(R.drawable.ic_menu_add_group);
 		
-        getSherlockActivity().getSupportActionBar().show();
-        getSherlockActivity().getSupportActionBar().setHomeButtonEnabled(false);
-        getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        getSherlockActivity().getSupportActionBar().setTitle(R.string.app_name);
+		((AppCompatActivity)getActivity()).getSupportActionBar().show();
+		((AppCompatActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(false);
+		((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+		((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.app_name);
     }
 	    
 	@Override

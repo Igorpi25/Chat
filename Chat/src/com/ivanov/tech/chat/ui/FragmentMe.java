@@ -4,17 +4,18 @@ import android.database.MatrixCursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.support.v7.app.AppCompatActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.SubMenu;
 import com.ivanov.tech.chat.Chat;
 import com.ivanov.tech.chat.R;
 import com.ivanov.tech.multipletypesadapter.cursoradapter.CursorItemHolderButton;
@@ -115,10 +116,10 @@ public class FragmentMe extends com.ivanov.tech.profile.ui.FragmentMe{
 		menuAddGroup.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		menuAddGroup.setIcon(R.drawable.ic_menu_add_group);
 								 
-        getSherlockActivity().getSupportActionBar().show();
-        getSherlockActivity().getSupportActionBar().setHomeButtonEnabled(false);
-        getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        getSherlockActivity().getSupportActionBar().setTitle("LetsRace-Chat");
+		((AppCompatActivity)getActivity()).getSupportActionBar().show();
+		((AppCompatActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(false);
+		((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+		((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("LetsRace-Chat");
     }
     
 	@Override

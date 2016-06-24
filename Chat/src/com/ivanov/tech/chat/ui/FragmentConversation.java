@@ -14,6 +14,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -38,7 +39,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.ivanov.tech.chat.R;
 import com.ivanov.tech.chat.multipletypesadapter.ItemHolderConversationDate;
 import com.ivanov.tech.chat.multipletypesadapter.ItemHolderConversationLeft;
@@ -51,7 +51,7 @@ import com.ivanov.tech.session.Session;
 /**
  * Created by Igor on 09.05.15.
  */
-public abstract class FragmentConversation extends SherlockDialogFragment implements OnScrollListener, OnClickListener, OnItemClickListener, TextWatcher{
+public abstract class FragmentConversation extends DialogFragment implements OnScrollListener, OnClickListener, OnItemClickListener, TextWatcher{
 
     private static final String TAG = FragmentConversation.class
             .getSimpleName();    

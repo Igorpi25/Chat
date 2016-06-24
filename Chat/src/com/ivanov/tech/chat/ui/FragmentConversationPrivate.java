@@ -12,9 +12,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.codebutler.android_websockets.WebSocketClient;
 import com.codebutler.android_websockets.WebSocketClient.Listener;
 import com.codebutler.android_websockets.WebSocketClient.OutgoingListener;
@@ -49,6 +46,9 @@ import android.support.v4.content.Loader;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -57,6 +57,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+
+import android.support.v7.app.AppCompatActivity;
 
 public class FragmentConversationPrivate extends FragmentConversation implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -240,10 +242,10 @@ public class FragmentConversationPrivate extends FragmentConversation implements
         menuDetails.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         menuDetails.setIcon(R.drawable.ic_menu_private);
         
-        getSherlockActivity().getSupportActionBar().show();
-        getSherlockActivity().getSupportActionBar().setHomeButtonEnabled(true);
-        getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSherlockActivity().getSupportActionBar().setTitle("Pivate conversation");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Pivate conversation");
     }
 	    
 	@Override
@@ -327,7 +329,7 @@ public class FragmentConversationPrivate extends FragmentConversation implements
 //--------------Utils-----------------------
 	
 	private void updateMenuTitle(String title){
-    	getSherlockActivity().getSupportActionBar().setTitle(title);
+		((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(title);
     }
     	
 	public int getUserId(){

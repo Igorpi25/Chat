@@ -8,15 +8,15 @@ import android.database.MergeCursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.SubMenu;
 import com.ivanov.tech.chat.Chat;
 import com.ivanov.tech.chat.R;
 import com.ivanov.tech.multipletypesadapter.cursoradapter.CursorItemHolderHeader;
@@ -24,6 +24,8 @@ import com.ivanov.tech.multipletypesadapter.cursoradapter.CursorItemHolderLink;
 import com.ivanov.tech.multipletypesadapter.cursoradapter.CursorMultipleTypesAdapter;
 import com.ivanov.tech.profile.Profile;
 import com.ivanov.tech.session.Session;
+
+import android.support.v7.app.AppCompatActivity;
 
 public class FragmentContacts extends com.ivanov.tech.profile.ui.FragmentContacts{
 	
@@ -148,10 +150,10 @@ public class FragmentContacts extends com.ivanov.tech.profile.ui.FragmentContact
 		menuAddGroup.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		menuAddGroup.setIcon(R.drawable.ic_menu_add_group);
 								 
-        getSherlockActivity().getSupportActionBar().show();
-        getSherlockActivity().getSupportActionBar().setHomeButtonEnabled(false);
-        getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        getSherlockActivity().getSupportActionBar().setTitle(R.string.app_name);
+		((AppCompatActivity)getActivity()).getSupportActionBar().show();
+		((AppCompatActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(false);
+		((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+		((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.app_name);
     }
     
 	@Override

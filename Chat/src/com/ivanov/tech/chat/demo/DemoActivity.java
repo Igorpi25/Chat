@@ -5,10 +5,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.MenuItem;
 import com.ivanov.tech.chat.Chat;
 import com.ivanov.tech.chat.R;
 import com.ivanov.tech.chat.reciever.MessageReciever;
@@ -22,7 +22,7 @@ import com.ivanov.tech.session.Session;
 /**
  * Created by Igor on 15.01.15.
  */
-public class DemoActivity extends SherlockFragmentActivity {
+public class DemoActivity extends AppCompatActivity {
 
 	private static final String TAG = DemoActivity.class
             .getSimpleName();  
