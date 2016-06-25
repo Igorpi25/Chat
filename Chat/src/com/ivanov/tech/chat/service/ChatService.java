@@ -7,12 +7,13 @@ import com.ivanov.tech.profile.service.TransportProfile;
 
 public class ChatService extends com.ivanov.tech.communicator.service.CommunicatorService{
 
-    public final static String URL_SERVER="ws://igorpi25.ru:8001";//Websocket server URL and port
-    public final static String URL_START_SERVER="http://igorpi25.ru/v2/communicator/start";
+	public final static String URL_DOMEN="igorpi25.ru";//Websocket server URL and port
+    public final static String URL_SERVER="ws://"+URL_DOMEN+":8001";//Websocket server URL and port
+    public final static String URL_START_SERVER="http://"+URL_DOMEN+"/v2/communicator/start";
 	
 	@Override
 	public ArrayList<TransportBase> createTransports() {
-		
+				
 		ArrayList<TransportBase> transports=new ArrayList<TransportBase>();		
 		
 		TransportChat transportchat=new TransportChat(this);		
@@ -20,7 +21,7 @@ public class ChatService extends com.ivanov.tech.communicator.service.Communicat
 		
 		transports.add(transportchat);
 		transports.add(transportprofile);
-		
+									
 		return transports;
 	}
 
