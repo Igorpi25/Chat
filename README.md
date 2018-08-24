@@ -1,12 +1,13 @@
 Chat
 ====
-<img src="http://igorpi25.ru/screenshot/chat/banner_github.png" height="200" />
+
+<img src="screenshots/banner_github.png" height="200" />
 
 Это движок мессенжера, построенный с использованием open-source библиотек. Движок польностью модульный. Каждый модуль представляет отдельный open-source проект на Github, с описанинием и запускаемым демонстрационным приложением.
 
 Демонстрационное приложение можете загрузить из [GooglePlay][11]
 
-[<img src="http://igorpi25.ru/screenshot/chat/google_play_icon.png" height="60" />][11]
+[<img src="screenshots/google_play_icon.png" height="60" />][11]
 
 Архитектура
 -----------
@@ -29,12 +30,12 @@ UI
 
 Обратите внимание на `LOADER_USERS`, благодоря которым получается "мгновенная отзывчивость", на изменение профиля другого пользователя, без необходимости перезагрузить весь фрагмент. Перезагружается только нужный Loader.
 
-<img src="http://igorpi25.ru/screenshot/chat/private_chat.png" height="200" />
+<img src="screenshots/private_chat.png" height="200" />
 
 ##### ConversationGroup.java
 Групповой чат, принцип работы одинаковый с чатом с одним человеком
 
-<img src="http://igorpi25.ru/screenshot/chat/group_chat.png" height="200" />
+<img src="screenshots/group_chat.png" height="200" />
 
 ##### Conversation.java
 Это базовый класс для фрагментов `ConversationPrivate.java` и `ConversationGroup.java` отображающих непосредственно чат. Основную работу по отображению записей полученных из БД, делает именно этот класс
@@ -43,19 +44,19 @@ UI
 
 Архитектура точно такая-же. Отличие данного UI фрагмента, в более сложном SQL-запросе, который расположен в `ContentProvider`. Т.е. на данном архитектурном уровне нет отличия от фрагментов описанных выше. Все тот же "мулти-адаптер" и "отзывчивость"
 
-<img src="http://igorpi25.ru/screenshot/chat/recent_chats.png" height="200" />
+<img src="screenshots/recent_chats.png" height="200" />
 
 UI элементы из Profile
 ----------------------
 ##### Contacts.java
-<img src="http://igorpi25.ru/screenshot/chat/contacts_list.png" height="200" />
+<img src="screenshots/contacts_list.png" height="200" />
 
 ##### DetailsGroup.java
-<img src="http://igorpi25.ru/screenshot/chat/group_profile.png" height="200" />
-<img src="http://igorpi25.ru/screenshot/chat/group_profile_2.png" height="200" />
+<img src="screenshots/group_profile.png" height="200" />
+<img src="screenshots/group_profile_2.png" height="200" />
 
 ##### DetailsUser.java
-<img src="http://igorpi25.ru/screenshot/chat/user_profile.png" height="200" />
+<img src="screenshots/user_profile.png" height="200" />
 
 Архитектура точно такая как предыдущие. Отличие данного UI фрагмента, в более сложном SQL-запросе, который расположен в `ContentProvider`. Т.е. на данном архитектурном уровне нет отличия от фрагментов описанных выше. Все тот же "мулти-адаптер" и "отзывчивость"
 
